@@ -8,7 +8,7 @@
 
 .container{
     display: grid;
-    grid-template-rows: 80px 500px 80px;
+    grid-template-rows: 80px 580px 80px;
 }
 
 .header{
@@ -44,6 +44,8 @@ a, .dev{
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    gap: 21px;
 }
 
 .board{
@@ -54,10 +56,27 @@ a, .dev{
     height: 450px;
 }
 
+.restart__btn{
+    padding: 15px;
+    width: 150px;
+    border: 3px solid #5752B4;
+    border-radius: 7px;
+    font-size: 20px;
+    font-weight: 500;
+    background-color: lightgray;
+}
+
+.restart__btn:hover{
+    background-color:rgb(255, 92, 32);
+}
+
 .block{
+    width: 148px;
+    height: 148px;
     border: 1px solid gray;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 100px;
+    color: darkslategrey;
     display: flex;
     align-items: center;
     justify-content: center;
