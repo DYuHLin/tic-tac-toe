@@ -81,3 +81,7 @@ a, .dev{
     align-items: center;
     justify-content: center;
 }
+
+.block:hover{
+    background-color: lightgray;
+}
