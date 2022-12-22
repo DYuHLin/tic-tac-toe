@@ -1,10 +1,10 @@
 const block = document.querySelectorAll(".block");
-let turnO = false;
 
 //the module for the gameboard
 const gameBoard = (() => {
     let board = ['', '', '', '', '', '', '', '', ''];
-    
+    let running = false;
+
     const winningCombo = [
         [0, 1, 2],
         [3, 4, 5],
@@ -16,7 +16,7 @@ const gameBoard = (() => {
         [2, 4, 6]
     ];
 
-    return {board, winningCombo};
+    return {board, running, winningCombo};
 })();
 
 //factory function for players
@@ -26,29 +26,31 @@ const playerCreator = (name, item) => {
 
 //factory function for game logic
 function game(){
-
-    const gameBoardObj = document.querySelector(".board");
-
     const restartBtn = document.getElementById("restart-btn");
 
-    block.forEach(cell => cell.addEventListener('click', gameBoardSelect));
+    block.forEach(blocks => blocks.addEventListener('click', gameBoardSelect));
+    
     restartBtn.addEventListener('click', restartGame);
-   
+    gameBoard.running = true;
 };
 
 function gameBoardSelect(){
-    const tiles = this.getAttribute("blockPos");
-    if(!gameBoard.board[tiles] !== ""){return};
+    const cellIndex = this.getAttribute("block");
+     if(gameBoard.board[cellIndex] != "" || !gameBoard.running){
+         return
+    };
 
-    updateTile(this, tiles);
+    updateTile(this, cellIndex);
+
+    console.log(cellIndex)
 };
 
-function updateTile(block, index){
+function updateTile(blocks, index){
     let player1 = playerCreator("Damian", "X");
     let player2 = playerCreator("Bot", "O");
     gameBoard.board[index] = player1.item;
 
-    block.textContent = player1.item;
+    blocks.textContent = player1.item;
 };
 
 function restartGame(){
