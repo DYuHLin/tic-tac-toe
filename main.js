@@ -4,6 +4,7 @@ const block = document.querySelectorAll(".block");
 const gameBoard = (() => {
     let board = ['', '', '', '', '', '', '', '', ''];
     let running = false;
+    let turnO = false;
 
     const winningCombo = [
         [0, 1, 2],
@@ -16,7 +17,7 @@ const gameBoard = (() => {
         [2, 4, 6]
     ];
 
-    return {board, running, winningCombo};
+    return {board, running, turnO, winningCombo};
 })();
 
 //factory function for players
@@ -28,29 +29,53 @@ const playerCreator = (name, item) => {
 function game(){
     const restartBtn = document.getElementById("restart-btn");
 
+    //loops through the tiles in the gameboard
     block.forEach(blocks => blocks.addEventListener('click', gameBoardSelect));
     
+    //restart the game with clock of a button
     restartBtn.addEventListener('click', restartGame);
+    //when the running is true the game is playable
     gameBoard.running = true;
 };
 
+//retrieves the tiles of the game board
 function gameBoardSelect(){
+    //gets the attribute of the html elemet "block"
     const cellIndex = this.getAttribute("block");
+
+    //does nothing if the tile is empty
      if(gameBoard.board[cellIndex] != "" || !gameBoard.running){
          return
     };
 
+    //calls the updateTile function
     updateTile(this, cellIndex);
 
     console.log(cellIndex)
 };
-
+//function to put an x or o in the tile
 function updateTile(blocks, index){
+    
     let player1 = playerCreator("Damian", "X");
     let player2 = playerCreator("Bot", "O");
-    gameBoard.board[index] = player1.item;
 
-    blocks.textContent = player1.item;
+    if(gameBoard.turnO === false){
+        gameBoard.board[index] = player1.item;
+        blocks.textContent = player1.item;
+        gameBoard.turnO = true;
+        console.log(gameBoard.turnO)
+
+    } else if (gameBoard.turnO === true) {
+        gameBoard.board[index] = player2.item;
+        blocks.textContent = player2.item;
+        gameBoard.turnO = false;
+        console.log(gameBoard.turnO)
+    }
+    
+};
+
+function logic(){
+
 };
 
 function restartGame(){
@@ -58,4 +83,3 @@ function restartGame(){
 };
 
 game();
-//gameBoardSelect()
