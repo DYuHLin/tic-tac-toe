@@ -33,7 +33,9 @@ function game(){
     block.forEach(blocks => blocks.addEventListener('click', gameBoardSelect));
     
     //restart the game with clock of a button
-    restartBtn.addEventListener('click', restartGame);
+    restartBtn.addEventListener('click', () => {
+        restartGame()
+    });
     //when the running is true the game is playable
     gameBoard.running = true;
 };
@@ -50,7 +52,7 @@ function gameBoardSelect(){
 
     //calls the updateTile function
     updateTile(this, cellIndex);
-
+    //logic();
     console.log(cellIndex)
 };
 //function to put an x or o in the tile
@@ -75,11 +77,36 @@ function updateTile(blocks, index){
 };
 
 function logic(){
+    let checkWin = false;
+    for(let i = 0; i < gameBoard.winningCombo.length; i++){
+        const combo = gameBoard.winningCombo[i];
+        const blockA = gameBoard.board[combo[0]];
+        const blockB = gameBoard.board[combo[1]];
+        const blockC = gameBoard.board[combo[2]];
 
+        if(blockA == "" || blockB == "" || blockC == ""){
+            continue;
+        } 
+        if(blockA == blockB && blockB == blockC){
+            checkWin = true;
+            break;
+        };
+    };
+
+    if(checkWin){
+        gameBoard.running = false;
+    } else if(gameBoard.board.includes("")){
+        gameBoard.running = false;
+    } else {
+        
+    };
 };
 
 function restartGame(){
-
+    gameBoard.running = true;
+    gameBoard.turnO = false;
+    gameBoard.board = ['', '', '', '', '', '', '', '', ''];
+    block.forEach(blocks => blocks.textContent = "");
 };
 
 game();
