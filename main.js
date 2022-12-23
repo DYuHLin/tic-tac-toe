@@ -89,6 +89,7 @@ function updateTile(blocks, index){
 
 //this functions checks for a winner
 function logic(){
+    const status = document.getElementById("status");
     let checkWin = false;
     for(let i = 0; i < gameBoard.winningCombo.length; i++){
         const combo = gameBoard.winningCombo[i];
@@ -100,20 +101,29 @@ function logic(){
             continue;
         } 
         if(blockA == blockB && blockB == blockC){
+            if(blockA == "X" && blockB == "X" && blockC == "X"){
+                status.innerText = `${gameBoard.firstName} won`
+            } else if (blockA == "O" && blockB == "O" && blockC == "O"){
+                status.innerText = `${gameBoard.secondName} won`
+            }
             checkWin = true;
             break;
         };
     };
 
     if(checkWin){
+         
         gameBoard.running = false;
     } else if(!gameBoard.board.includes("")){
+        status.innerText = "It is a draw"
         gameBoard.running = false;
     }
 };
 
 //this function resets everything to restart the game
 function restartGame(){
+    const status = document.getElementById("status");
+    status.innerText = "";
     gameBoard.running = true;
     gameBoard.turnO = false;
     gameBoard.board = ['', '', '', '', '', '', '', '', ''];
