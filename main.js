@@ -17,7 +17,10 @@ const gameBoard = (() => {
         [2, 4, 6]
     ];
 
-    return {board, running, turnO, winningCombo};
+    let firstName = prompt("Enter first player Name:")
+    let secondName = prompt("Enter second player Name:")
+
+    return {board, running, turnO, winningCombo, firstName, secondName};
 })();
 
 //factory function for players
@@ -52,14 +55,22 @@ function gameBoardSelect(){
 
     //calls the updateTile function
     updateTile(this, cellIndex);
-    //logic();
+    logic();
     console.log(cellIndex)
 };
 //function to put an x or o in the tile
 function updateTile(blocks, index){
     
-    let player1 = playerCreator("Damian", "X");
-    let player2 = playerCreator("Bot", "O");
+    //creating the players
+    let player1 = playerCreator(gameBoard.firstName, "X");
+    let player2 = playerCreator(gameBoard.secondName, "O");
+
+    //displays the name of the players
+    const firstPlayerName = document.getElementById("playerOne");
+    const secondPlayerName = document.getElementById("playerTwo");
+
+    firstPlayerName.innerText = gameBoard.firstName;
+    secondPlayerName.textContent = gameBoard.secondName;
 
     if(gameBoard.turnO === false){
         gameBoard.board[index] = player1.item;
@@ -76,6 +87,7 @@ function updateTile(blocks, index){
     
 };
 
+//this functions checks for a winner
 function logic(){
     let checkWin = false;
     for(let i = 0; i < gameBoard.winningCombo.length; i++){
@@ -95,13 +107,12 @@ function logic(){
 
     if(checkWin){
         gameBoard.running = false;
-    } else if(gameBoard.board.includes("")){
+    } else if(!gameBoard.board.includes("")){
         gameBoard.running = false;
-    } else {
-        
-    };
+    }
 };
 
+//this function resets everything to restart the game
 function restartGame(){
     gameBoard.running = true;
     gameBoard.turnO = false;

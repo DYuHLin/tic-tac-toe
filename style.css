@@ -8,7 +8,7 @@
 
 .container{
     display: grid;
-    grid-template-rows: 80px 580px 80px;
+    grid-template-rows: 80px 680px 80px;
 }
 
 .header{
@@ -84,4 +84,28 @@ a, .dev{
 
 .block:hover{
     background-color: lightgray;
+}
+
+.main__board{
+    display: flex;
+    gap: 24px;
+}
+
+.player__one, .player__two{
+    font-size: 32px;
+    font-weight: 300;
+    text-decoration: underline;
+}
+
+.firstNameContainer, .secondNameContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.status{
+    font-size: 24px;
+    font-weight: 400;
+    padding: 12px;
+    margin-top: 24px;
 }
