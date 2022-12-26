@@ -39,6 +39,12 @@ function game(){
     restartBtn.addEventListener('click', () => {
         restartGame()
     });
+
+    const againstPc = document.getElementById("computer-btn");
+
+    againstPc.addEventListener('click', () => {
+        againstComputer();
+    });
     //when the running is true the game is playable
     gameBoard.running = true;
 };
@@ -128,6 +134,20 @@ function restartGame(){
     gameBoard.turnO = false;
     gameBoard.board = ['', '', '', '', '', '', '', '', ''];
     block.forEach(blocks => blocks.textContent = "");
+};
+
+function againstComputer(){
+    const cellIndex = this.getAttribute("block");
+    const secondPlayerName = document.getElementById("playerTwo");
+    secondPlayerName.textContent = "Computer"
+    let player3 = playerCreator(gameBoard.secondName, "O");
+
+    if(gameBoard.turnO === true){
+        let randomNum = Math.floor(Math.random() * 8) +1;
+        console.log(randomNum)
+        gameBoard.board[randomNum] = player3.item;
+        gameBoard.turnO = false;
+    }
 };
 
 game();
