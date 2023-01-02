@@ -6,6 +6,7 @@ const gameBoard = (() => {
     let running = false;
     let turnO = false;
 
+    let againstAi = false;
     const winningCombo = [
         [0, 1, 2],
         [3, 4, 5],
@@ -17,10 +18,10 @@ const gameBoard = (() => {
         [2, 4, 6]
     ];
 
-    let firstName = prompt("Enter first player Name:")
-    let secondName = prompt("Enter second player Name:")
+    let firstName;
+    let secondName;
 
-    return {board, running, turnO, winningCombo, firstName, secondName};
+    return {board, running, turnO, winningCombo, firstName, secondName, againstAi};
 })();
 
 //factory function for players
@@ -40,14 +41,39 @@ function game(){
         restartGame()
     });
 
+    const nameBtn = document.getElementById("confirmName");
+
+    nameBtn.addEventListener('click', () => {
+        createPlayer()
+    });
+
     const againstPc = document.getElementById("computer-btn");
 
     againstPc.addEventListener('click', () => {
-        againstComputer();
+        gameBoard.againstAi = true;
+        console.log(gameBoard.againstAi)
+
+        const secondPlayerName = document.getElementById("playerTwo");
+        secondPlayerName.textContent = "Computer"
     });
     //when the running is true the game is playable
     gameBoard.running = true;
 };
+
+//popup box to create the names of the players
+function createPlayer(){
+    const firstPlayerText = document.getElementById("first-player-name");
+    const secondPlayerText = document.getElementById("second-player-name");
+
+    gameBoard.firstName = firstPlayerText.value;
+    gameBoard.secondName = secondPlayerText.value;
+
+    const popupWindow = document.getElementById("chooseName");
+    popupWindow.style = "visibility: hidden";
+
+    console.log(gameBoard.firstName)
+    console.log(gameBoard.secondName)
+}
 
 //retrieves the tiles of the game board
 function gameBoardSelect(){
@@ -136,7 +162,9 @@ function restartGame(){
     block.forEach(blocks => blocks.textContent = "");
 };
 
+//function for playing against computer
 function againstComputer(){
+    gameBoard.againstAi = true;
     const cellIndex = this.getAttribute("block");
     const secondPlayerName = document.getElementById("playerTwo");
     secondPlayerName.textContent = "Computer"
