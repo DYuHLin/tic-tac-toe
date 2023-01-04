@@ -46,16 +46,6 @@ function game(){
     nameBtn.addEventListener('click', () => {
         createPlayer()
     });
-
-    const againstPc = document.getElementById("computer-btn");
-
-    againstPc.addEventListener('click', () => {
-        gameBoard.againstAi = true;
-        console.log(gameBoard.againstAi)
-
-        const secondPlayerName = document.getElementById("playerTwo");
-        secondPlayerName.textContent = "Computer"
-    });
     //when the running is true the game is playable
     gameBoard.running = true;
 };
@@ -70,9 +60,6 @@ function createPlayer(){
 
     const popupWindow = document.getElementById("chooseName");
     popupWindow.style = "visibility: hidden";
-
-    console.log(gameBoard.firstName)
-    console.log(gameBoard.secondName)
 }
 
 //retrieves the tiles of the game board
@@ -104,6 +91,7 @@ function updateTile(blocks, index){
     firstPlayerName.innerText = gameBoard.firstName;
     secondPlayerName.textContent = gameBoard.secondName;
 
+    //for the placing of pieces on gameboard
     if(gameBoard.turnO === false){
         gameBoard.board[index] = player1.item;
         blocks.textContent = player1.item;
@@ -115,7 +103,8 @@ function updateTile(blocks, index){
         blocks.textContent = player2.item;
         gameBoard.turnO = false;
         console.log(gameBoard.turnO)
-    }
+
+     } 
     
 };
 
@@ -143,8 +132,7 @@ function logic(){
         };
     };
 
-    if(checkWin){
-         
+    if(checkWin){    
         gameBoard.running = false;
     } else if(!gameBoard.board.includes("")){
         status.innerText = "It is a draw"
@@ -160,22 +148,6 @@ function restartGame(){
     gameBoard.turnO = false;
     gameBoard.board = ['', '', '', '', '', '', '', '', ''];
     block.forEach(blocks => blocks.textContent = "");
-};
-
-//function for playing against computer
-function againstComputer(){
-    gameBoard.againstAi = true;
-    const cellIndex = this.getAttribute("block");
-    const secondPlayerName = document.getElementById("playerTwo");
-    secondPlayerName.textContent = "Computer"
-    let player3 = playerCreator(gameBoard.secondName, "O");
-
-    if(gameBoard.turnO === true){
-        let randomNum = Math.floor(Math.random() * 8) +1;
-        console.log(randomNum)
-        gameBoard.board[randomNum] = player3.item;
-        gameBoard.turnO = false;
-    }
 };
 
 game();
