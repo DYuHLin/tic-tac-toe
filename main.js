@@ -2,11 +2,15 @@ const block = document.querySelectorAll(".block");
 
 //the module for the gameboard
 const gameBoard = (() => {
+    //board which the X and O goes
     let board = ['', '', '', '', '', '', '', '', ''];
+    //variable to let the game run
     let running = false;
+
+    //variable to let O haave a turn
     let turnO = false;
 
-    let againstAi = false;
+    //the sets of combos that win the game
     const winningCombo = [
         [0, 1, 2],
         [3, 4, 5],
@@ -18,6 +22,7 @@ const gameBoard = (() => {
         [2, 4, 6]
     ];
 
+    //variables for names of players
     let firstName;
     let secondName;
 
@@ -41,8 +46,8 @@ function game(){
         restartGame()
     });
 
+    //button that sets the name of players
     const nameBtn = document.getElementById("confirmName");
-
     nameBtn.addEventListener('click', () => {
         createPlayer()
     });
@@ -52,12 +57,13 @@ function game(){
 
 //popup box to create the names of the players
 function createPlayer(){
+    //The UI of the tic tac toe game for the names
     const firstPlayerText = document.getElementById("first-player-name");
     const secondPlayerText = document.getElementById("second-player-name");
-
     gameBoard.firstName = firstPlayerText.value;
     gameBoard.secondName = secondPlayerText.value;
 
+    //to close the window when the users have inputted their names
     const popupWindow = document.getElementById("chooseName");
     popupWindow.style = "visibility: hidden";
 }
@@ -97,7 +103,7 @@ function updateTile(blocks, index){
         blocks.textContent = player1.item;
         gameBoard.turnO = true;
         console.log(gameBoard.turnO)
-
+        //to give player 2 O a turn
     } else if (gameBoard.turnO === true) {
         gameBoard.board[index] = player2.item;
         blocks.textContent = player2.item;
@@ -110,30 +116,41 @@ function updateTile(blocks, index){
 
 //this functions checks for a winner
 function logic(){
+    //above the board UI to let the users know the status of the game
     const status = document.getElementById("status");
+    //variable that changes if there is a winner
     let checkWin = false;
+    //loops through the winninh combinations to see if there is a winner in the gameboard array
     for(let i = 0; i < gameBoard.winningCombo.length; i++){
         const combo = gameBoard.winningCombo[i];
         const blockA = gameBoard.board[combo[0]];
         const blockB = gameBoard.board[combo[1]];
         const blockC = gameBoard.board[combo[2]];
 
+        //continues the loop if there is no winner yet and there is still empty spaces
         if(blockA == "" || blockB == "" || blockC == ""){
             continue;
         } 
+        //checks for a winner, seeing if these blocks match
         if(blockA == blockB && blockB == blockC){
             if(blockA == "X" && blockB == "X" && blockC == "X"){
+                //checks if x won and changes the status of the text if so
                 status.innerText = `${gameBoard.firstName} won`
             } else if (blockA == "O" && blockB == "O" && blockC == "O"){
+                //checks if o won and changes the status of the text if so
                 status.innerText = `${gameBoard.secondName} won`
             }
+            //when there is a winner the checkwin changes to true and the loop stops
             checkWin = true;
             break;
         };
     };
 
+    //if checkwin is true the game stops running
     if(checkWin){    
         gameBoard.running = false;
+        //if the gameboard does not include empty spaces and there is no winner it is a draw and the
+        //game stops running
     } else if(!gameBoard.board.includes("")){
         status.innerText = "It is a draw"
         gameBoard.running = false;
