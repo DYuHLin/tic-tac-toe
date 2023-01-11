@@ -26,7 +26,7 @@ const gameBoard = (() => {
     let firstName;
     let secondName;
 
-    return {board, running, turnO, winningCombo, firstName, secondName, againstAi};
+    return {board, running, turnO, winningCombo, firstName, secondName};
 })();
 
 //factory function for players
